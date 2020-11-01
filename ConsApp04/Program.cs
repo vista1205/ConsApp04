@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -269,6 +271,149 @@ namespace ConsApp04
         string[] a;
     }
     #endregion
+
+    #region Задание №4а. Реализовать класс для работы с двумерным массивом
+    class MyClassToTask4a
+    {
+        public MyClassToTask4a(int stroka, int stolbec)
+        {
+            a = new int[stroka, stolbec];
+            Random rnd = new Random();
+            for(int i=0; i < stroka; i++)
+            {
+                for(int j = 0; j < stolbec; j++)
+                {
+                    a[i, j] = rnd.Next(-50, 50);
+                }
+            }
+        }
+        #region Добавить конструктор и методы, которые загружают данные из файла и записывают данные в файл.
+        public void WriteToArrayList(string FileName)
+        {
+            if (File.Exists(FileName))
+            {
+                StreamWriter writerAll = new StreamWriter(FileName, false);
+                writerAll.WriteLine(a.GetLength(0));
+                writerAll.Close();
+                StreamWriter writer = new StreamWriter(FileName, true);
+                for (int i = 0; i < a.GetLength(0); i++)
+                {
+                    for(int j=0; j < a.GetLength(1); j++)
+                        writer.WriteLine(a[i,j]);
+                }
+                writer.Close();
+            }
+            else
+                throw new FileNotFoundException();
+        }
+        public int[,] LoadFiletoArray(string FileName)
+        {
+            if (File.Exists(FileName))
+            {
+                try 
+                {
+                    StreamReader reader = new StreamReader(FileName);
+                    int n = Convert.ToInt32(reader.ReadLine());
+                    a = new int[n, n];
+                    for (int i = 0; i < n; i++)
+                    {
+                        for (int j = 0; j < n; j++)
+                        {
+                            int.TryParse(reader.ReadLine(), out int num);
+                            a[i, j] = num;
+                        }
+                    }
+                    reader.Close();
+                    return a;
+                }
+
+                catch
+                {
+                    throw new ArgumentException();
+                }
+                
+            }
+            else
+                throw new FileNotFoundException();
+        }
+        public void Invers()
+        {
+            for (int i = 0; i < a.GetLength(0); i++)
+            {
+                for(int j = 0; j < a.GetLength(1); j++)
+                {
+                    a[i,j] *= -1;
+                }
+            }
+                
+        }
+            #endregion
+            public void Sum (out int Sum)
+        {
+            Sum = 0;
+            for(int i=0;i< a.GetLength(0); i++)
+            {
+                for (int j = 0; j < a.GetLength(1); j++)
+                    Sum += a[i, j];
+            }
+        } 
+        public void DefSum(ref int value, out int Sum)
+        {
+            Sum = 0;
+            for (int i = 0; i < a.GetLength(0); i++)
+            {
+                for (int j = 0; j < a.GetLength(1); j++)
+                    if(a[i,j]>value)
+                        Sum += a[i, j];
+            }
+        }
+        public void Min(out int min)
+        {
+            min =a[0, 0];
+            for (int i = 0; i < a.GetLength(0); i++)
+            {
+                for (int j = 0; j < a.GetLength(1); j++)
+                    if (a[i, j] < min)
+                        min = a[i, j];
+            }
+        }
+        public void MaxAndIndex(out int max, out int indexI, out int indexJ)
+        {
+            max = 0;
+            indexI = 0;
+            indexJ = 0;
+            for (int i = 0; i < a.GetLength(0); i++)
+            {
+                for (int j = 0; j < a.GetLength(1); j++)
+                    if (a[i, j] > max)
+                    {
+                        max = a[i, j];
+                        indexI = i;
+                        indexJ = j;
+                    } 
+            }
+        }
+        public MyClassToTask4a()
+        {
+
+        }
+        public void Print()
+        {
+            for (int i = 0; i < a.GetLength(0); i++)
+            {
+                for (int j = 0; j < a.GetLength(1); j++)
+                    Console.Write($"{a[i, j]} ");
+                Console.WriteLine();
+            }
+        }
+        public void Print(string messsage)
+        {
+            Console.WriteLine(messsage);
+            Print();
+        }
+        int[,] a;
+    }
+    #endregion
     class Program
     {
         static void Main(string[] args)
@@ -375,6 +520,62 @@ namespace ConsApp04
             while (count < 3);
             if (count == 3)
                 Console.WriteLine($"Вы ввели {count} раза неправильный логин или пароль!\nВ авторизации Отказано!");
+            #endregion
+            
+            #region Задание №4. Реализовать класс для работы с двумерным массивом
+
+            try
+            {
+                Console.Write("Введите количество строк: ");
+                int stroka = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Введите количество столбцов: ");
+                int stolbec = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Введите число, для рассчёта суммы элементов, которые больше: ");
+                int x = Convert.ToInt32(Console.ReadLine());
+                MyClassToTask4a Task4a = new MyClassToTask4a(stroka, stolbec);
+                Task4a.Print();
+                Task4a.Sum(out int summa);
+                Task4a.DefSum(ref x, out int summaMax);
+                Task4a.Min(out int min);
+                Task4a.MaxAndIndex(out int max, out int indexi, out int indexj);
+                Console.WriteLine($"Сумма элементов массива: {summa}");
+                Console.WriteLine($"Сумма элементов массива: {summaMax}, которые больше заданного числа {x}");
+                Console.WriteLine($"Минимальный элемент массива: {min}");
+                Console.WriteLine($"Максимальный элемент массива находится по адресу a[{indexi},{indexj}], его значение: {max}");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            #endregion 
+            
+            #region Задание №4б. Добавить конструктор и методы, которые загружают данные из файла и записывают данные в файл.
+            
+            try
+            {
+                string FilePuth = AppDomain.CurrentDomain.BaseDirectory + "ArrayTwoDim.txt";
+                MyClassToTask4a Task4b = new MyClassToTask4a();
+                var b = Task4b.LoadFiletoArray(FilePuth);
+                Console.Write("Введите число, для рассчёта суммы элементов, которые больше: ");
+                int x = Convert.ToInt32(Console.ReadLine());
+                Task4b.Print("Новый массив, считанный из файла");
+                Task4b.Sum(out int summa);
+                Task4b.DefSum(ref x, out int summaMax);
+                Task4b.Min(out int min);
+                Task4b.MaxAndIndex(out int max, out int indexi, out int indexj);
+                Console.WriteLine($"Сумма элементов массива: {summa}");
+                Console.WriteLine($"Сумма элементов массива: {summaMax}, которые больше заданного числа {x}");
+                Console.WriteLine($"Минимальный элемент массива: {min}");
+                Console.WriteLine($"Максимальный элемент массива находится по адресу a[{indexi},{indexj}], его значение: {max}");
+                Task4b.Invers();
+                Task4b.WriteToArrayList(FilePuth);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
             #endregion
             Console.ReadKey();
         }
