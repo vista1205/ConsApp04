@@ -224,6 +224,51 @@ namespace ConsApp04
         int[] a;
     }
     #endregion
+
+    #region Задание №3.
+    class MyArrayTask3
+    {
+        
+        public string [] LoadFileToArryaTask3(string FileName)
+        {
+            StreamReader reader = new StreamReader(FileName);
+            if (File.Exists(FileName))
+            {
+                try
+                {
+                    int n = Convert.ToInt32((reader.ReadLine()));
+                    a = new string[n];
+                    for (int i = 0; i < a.Length; i++)
+                    {
+                        a[i] = reader.ReadLine();
+                    }
+                    return a;
+                }
+                catch
+                {
+                    throw new ArgumentException();
+                }
+                
+            }
+            else
+                throw new FileNotFoundException();
+            
+        }
+
+        public bool PasswordConf(string login, string password)
+        {
+            if (a[0] == login && a[1] == password)
+                return true;
+            else
+                return false;
+        }
+        public MyArrayTask3()
+        {
+
+        }
+        string[] a;
+    }
+    #endregion
     class Program
     {
         static void Main(string[] args)
@@ -301,7 +346,35 @@ namespace ConsApp04
             {
                 Console.WriteLine(e.Message);
             }
-            
+
+            #endregion
+
+            #region Задание №3.
+            string FilePuthPassw = AppDomain.CurrentDomain.BaseDirectory + "Password.txt";
+            MyArrayTask3 Task3 = new MyArrayTask3();
+            var check = Task3.LoadFileToArryaTask3(FilePuthPassw);
+            int count = 0;
+            do
+            {
+                Console.Write("Введите логин: ");
+                string login = Console.ReadLine();
+                Console.Write("Введите пароль: ");
+                string password = Console.ReadLine();
+                if (Task3.PasswordConf(login, password) == true)
+                {
+                    Console.WriteLine("поздравляем! Вы успешно авторизовались!");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Вы неверно ввели логин или пароль!");
+                    count++;
+                }
+
+            }
+            while (count < 3);
+            if (count == 3)
+                Console.WriteLine($"Вы ввели {count} раза неправильный логин или пароль!\nВ авторизации Отказано!");
             #endregion
             Console.ReadKey();
         }
