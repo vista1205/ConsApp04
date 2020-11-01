@@ -1,0 +1,8 @@
+C:\Users\Family\Desktop\GeekBrains\Основы языка C#\ConsApp04\ConsApp04\bin\Debug\ConsApp04.exe.config
+C:\Users\Family\Desktop\GeekBrains\Основы языка C#\ConsApp04\ConsApp04\bin\Debug\ConsApp04.exe
+C:\Users\Family\Desktop\GeekBrains\Основы языка C#\ConsApp04\ConsApp04\bin\Debug\ConsApp04.pdb
+C:\Users\Family\Desktop\GeekBrains\Основы языка C#\ConsApp04\ConsApp04\obj\Debug\ConsApp04.csprojAssemblyReference.cache
+C:\Users\Family\Desktop\GeekBrains\Основы языка C#\ConsApp04\ConsApp04\obj\Debug\ConsApp04.csproj.CoreCompileInputs.cache
+C:\Users\Family\Desktop\GeekBrains\Основы языка C#\ConsApp04\ConsApp04\obj\Debug\ConsApp04.exe
+C:\Users\Family\Desktop\GeekBrains\Основы языка C#\ConsApp04\ConsApp04\obj\Debug\ConsApp04.pdb
+C:\Users\Family\Desktop\GeekBrains\Основы языка C#\ConsApp04\ConsApp04\bin\Debug\FileArrayList.txt
